@@ -14,10 +14,32 @@ class AbrigoAnimais {
     { nome: 'Bola', especie: 'cão', brinquedos: ['CAIXA', 'NOVELO'] },
     { nome: 'Bebe', especie: 'cão', brinquedos: ['LASER', 'RATO', 'BOLA'] },
     { nome: 'Loco', especie: 'jabuti', brinquedos: ['SKATE', 'RATO'] }
-  ];
+    ];
+
+
+    function validarBrinquedos(brinquedosArray, brinquedosValidos) {
+
+      const temDuplicatas = new Set(brinquedosArray).size !== brinquedosArray.length;
+    
+      if (temDuplicatas) return false;
+    
+      return brinquedosArray.every(b => brinquedosValidos.includes(b));
+
+    }
+
   
+    function validarAnimais(animaisArray, animaisValidos) {
+
+      const temDuplicatas = new Set(animaisArray).size !== animaisArray.length;
+
+      if (temDuplicatas) return false;
+
+      return animaisArray.every(animalNome => animaisValidos.some(a => a.nome === animalNome));
+    
+    }
 
   }
+  
 }
 
 export { AbrigoAnimais as AbrigoAnimais };
