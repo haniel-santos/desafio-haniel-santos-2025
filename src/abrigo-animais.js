@@ -35,11 +35,80 @@ class AbrigoAnimais {
       if (temDuplicatas) return false;
 
       return animaisArray.every(animalNome => animaisValidos.some(a => a.nome === animalNome));
-    
+
     }
 
+    if (!validarBrinquedos(listaPessoa1, brinquedos) || !validarBrinquedos(listaPessoa2, brinquedos)) {
+
+      return { erro: 'Brinquedo inválido' };
+
+    }
+
+    if (!validarAnimais(listaAnimais, animaisValidos)) {
+
+      return { erro: 'Animal inválido' };
+
+    }
+
+    function contemSequencia(brinquedosPessoa, brinquedosAnimal) {
+
+      let indexAnimal = 0;
+
+      for (let i = 0; i < brinquedosPessoa.length && indexAnimal < brinquedosAnimal.length; i++) {
+
+        if (brinquedosPessoa[i] === brinquedosAnimal[indexAnimal]) {
+
+            indexAnimal++;
+
+        }
+      }
+    
+      return indexAnimal === brinquedosAnimal.length;
+
+    }
+
+    const resultados = [];
+
+    for (const nomeAnimal of listaAnimais) {
+
+      const animal = animaisValidos.find(a => a.nome === nomeAnimal);
+
+      const brinquedosAnimal = animal.brinquedos;
+    
+      const pessoa1Atende = contemSequencia(listaPessoa1, brinquedosAnimal);
+
+      const pessoa2Atende = contemSequencia(listaPessoa2, brinquedosAnimal);
+    
+ 
+      if (pessoa1Atende && pessoa2Atende) {
+
+          resultados.push(`${animal.nome} - abrigo`);
+
+          continue;
+
+      }
+
+      if (pessoa1Atende) {
+
+        resultados.push(`${animal.nome} - pessoa 1`);
+
+    } else if (pessoa2Atende) {
+
+        resultados.push(`${animal.nome} - pessoa 2`);
+
+    } else {
+
+        resultados.push(`${animal.nome} - abrigo`);
+
+    }    
+    
   }
-  
+     
+    resultados.sort();
+
+    return { lista: resultados };
+
+  }
 }
 
 export { AbrigoAnimais as AbrigoAnimais };
